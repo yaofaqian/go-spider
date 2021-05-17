@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -49,7 +50,7 @@ func GetEveryBookInfo(bookUrl string) {
 	}
 	bookInfo.BookName = document.Find("#info > h1").Text()
 	bookInfo.BookIndexUrl = bookUrl
-	bookInfo.BookAuthor = document.Find("//*[@id=\"info\"]/p[1]").Text()
-	bookInfo.BookNewChapter = document.Find("//*[@id=\"info\"]/p[4]/a").Text()
+	bookInfo.BookAuthor = strings.Replace(document.Find("#info > p:nth-child(2)").Text(), "作    者：", "", 1)
+	bookInfo.BookNewChapter = document.Find("#info > p:nth-child(5) > a").Text()
 	fmt.Println(bookInfo)
 }
